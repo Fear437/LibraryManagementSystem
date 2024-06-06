@@ -10,6 +10,8 @@ class Program
         string jsonString = File.ReadAllText(fileName);
         Library library;
         try {
+            // Null forgiving operator (!) surpresses the null warning (we know json not null)
+            // Deserialize the JSON string to a Library object
             library = JsonSerializer.Deserialize<Library>(jsonString)!;
             Console.WriteLine("Library loaded successfully.\n");
         } catch (JsonException) {
@@ -107,10 +109,35 @@ class Library
         Console.WriteLine();
     }
 
+// Search for a book by title or author
     public void SearchBook()
     {
         Console.WriteLine("Enter book title or author to search: ");
-        // TODO: Implement searching for book
+
+        // ?? is the null-coalescing operator, if null then empty string
+        // empty string would print all books
+        string searchQuery = Console.ReadLine() ?? "";
+
+        // Find all books that contain the search query in the title or author
+        var results = Books.FindAll(book => 
+            book.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) || 
+            book.Author.Contains(searchQuery, StringComparison.OrdinalIgnoreCase));
+        // searchQuery.ToLower(); // Should use ordinal ignore case
+
+        if (results.Count == 0)
+        {
+            Console.WriteLine("No books found.\n");
+        }
+        else
+        {
+            // Print the search results
+            foreach (var book in results)
+            {
+                string status = book.IsBorrowed ? "Borrowed" : "Available";
+                Console.WriteLine($"Title: {book.Title}, Author: {book.Author}, Status: {status}");
+            }
+            Console.WriteLine();
+        }
     }
 
     public void BorrowBook()
