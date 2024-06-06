@@ -1,0 +1,54 @@
+{
+    "Books": [
+        {
+            "Title": "The Great Gatsby",
+            "Author": "F. Scott Fitzgerald",
+            "IsIsBorrowed": false
+        },
+        {
+            "Title": "To Kill a Mockingbird",
+            "Author": "Harper Lee",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "1984",
+            "Author": "George Orwell",
+            "IsBorrowed": true
+        },
+        {
+            "Title": "Pride and Prejudice",
+            "Author": "Jane Austen",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "The Catcher in the Rye",
+            "Author": "J.D. Salinger",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "The Hobbit",
+            "Author": "J.R.R. Tolkien",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "The Lord of the Rings",
+            "Author": "J.R.R. Tolkien",
+            "IsBorrowed": true
+        },
+        {
+            "Title": "The Da Vinci Code",
+            "Author": "Dan Brown",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "Dark Life",
+            "Author": "Kat Falls",
+            "IsBorrowed": false
+        },
+        {
+            "Title": "Dark Life",
+            "Author": "Kat Falls",
+            "IsBorrowed": false
+        }
+    ]
+}

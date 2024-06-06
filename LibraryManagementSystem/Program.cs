@@ -1,10 +1,21 @@
-﻿namespace LibraryManagementSystem;
+﻿using System.Text.Json;
+namespace LibraryManagementSystem;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Library library = new();
+        // Initialize the library with books from a JSON file
+        string fileName = "Library.json";
+        string jsonString = File.ReadAllText(fileName);
+        Library library;
+        try {
+            library = JsonSerializer.Deserialize<Library>(jsonString)!;
+            Console.WriteLine("Library loaded successfully.\n");
+        } catch (JsonException) {
+            Console.WriteLine("Error reading library from file. Creating a new library.\n");
+            library = new();
+        }
         
         // Receive commands from the user until exited
         bool exit = false;
