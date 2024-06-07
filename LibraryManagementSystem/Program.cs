@@ -198,16 +198,15 @@ class Library
         else
         {
             Book bookToReturn;
-            if (results.Count > 1)
+            if (results.Count == 1)
             {
-                // TODO: Handle multiple copies of the book in the library
-                Console.WriteLine("Multiple books of the same title found. Enter the Author.\n");
-                string author = Console.ReadLine() ?? "";
-                bookToReturn = results.Find(b => b.Author.Equals(author, StringComparison.OrdinalIgnoreCase))!;
+                bookToReturn = results[0];
             }
             else
             {
-                bookToReturn = results[0];
+                Console.WriteLine("Multiple books of the same title found. Enter the Author.");
+                string author = Console.ReadLine() ?? "";
+                bookToReturn = results.Find(b => b.Author.Equals(author, StringComparison.OrdinalIgnoreCase) && b.IsBorrowed)!;
             }
 
             if (bookToReturn == null)
