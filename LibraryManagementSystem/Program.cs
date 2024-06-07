@@ -109,7 +109,7 @@ class Library
         Console.WriteLine();
     }
 
-// Search for a book by title or author
+    // Search for a book by title or author
     public void SearchBook()
     {
         Console.WriteLine("Enter book title or author to search: ");
@@ -140,7 +140,7 @@ class Library
         }
     }
 
-// Borrow a book by title and author
+    // Borrow a book by title and author
     public void BorrowBook()
     {
         Console.WriteLine("Enter the title of the book to borrow: ");
@@ -160,17 +160,19 @@ class Library
             }
             else
             {
-                // TODO: Handle multiple copies of the book in the library
-                // For now, just borrow the first book found
                 Console.WriteLine("Multiple books of the same title found. Enter the Author: ");
                 string author = Console.ReadLine() ?? "";
-                bookToBorrow = results.Find(b => b.Author.Equals(author, StringComparison.OrdinalIgnoreCase))!;
+                // Find a matching book thats not borrowed
+                // null if not found or all borrowed
+                bookToBorrow = results.Find(b => b.Author.Equals(author, StringComparison.OrdinalIgnoreCase) && !b.IsBorrowed)!;
             }
 
             // Set the book as borrowed if found and not already borrowed
             if (bookToBorrow == null)
             {
-                Console.WriteLine("Book not found. Please try again.\n");
+                // TODO: Handle case where book not found or all copies are borrowed separately
+                // Book not found or all borrowed
+                Console.WriteLine("Book not found or all copies are borrowed. Please try again.\n");
             }
             else if (bookToBorrow.IsBorrowed) {
                 Console.WriteLine("Book is already borrowed. Please try again later.\n");
