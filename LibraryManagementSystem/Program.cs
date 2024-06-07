@@ -201,9 +201,12 @@ class Library
         else
         {
             Book bookToReturn;
-            if (results.Count == 1)
+            if (results.Select(b => b.Author).Distinct().Count() == 1)
             {
-                bookToReturn = results[0];
+                // TODO: Could update to keep track of who borrowed the book
+                // and return that specific book
+                // For now, just return the first borrowed book found
+                bookToReturn = results.Find(b => b.IsBorrowed)!;
             }
             else
             {
@@ -214,7 +217,9 @@ class Library
 
             if (bookToReturn == null)
             {
-                Console.WriteLine("Book not found. Please try again.\n");
+                // TODO: Handle case where book not found or all copies are available separately
+                // Book not found or all available
+                Console.WriteLine("Book not found or all available. Please try again.\n");
             }
             else if (!bookToReturn.IsBorrowed)
             {
@@ -232,6 +237,7 @@ class Library
 // Book class to represent a book
 class Book(string Title, string Author)
 {
+    // Could add more properties like ISBN, genre, UUID, etc.
     public string Title { get; set; } = Title;
     public string Author { get; set; } = Author;
     public bool IsBorrowed { get; set; } = false;
