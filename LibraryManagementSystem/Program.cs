@@ -109,7 +109,7 @@ class Library
         Console.WriteLine();
     }
 
-// Search for a book by title or author
+    // Search for a book by title or author
     public void SearchBook()
     {
         Console.WriteLine("Enter book title or author to search: ");
@@ -140,7 +140,7 @@ class Library
         }
     }
 
-// Borrow a book by title and author
+    // Borrow a book by title and author
     public void BorrowBook()
     {
         Console.WriteLine("Enter the title of the book to borrow: ");
@@ -183,10 +183,45 @@ class Library
         }
     }
 
+    // Return a book by title and author
     public void ReturnBook()
     {
         Console.WriteLine("Enter the title of the book to return: ");
-        // TODO: Implement returning a book
+        string title = Console.ReadLine() ?? "";
+        var results = Books.FindAll(book => book.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        if (results.Count == 0)
+        {
+            Console.WriteLine("Book not found. Please try again.\n");
+        }
+        else
+        {
+            Book bookToReturn;
+            if (results.Count > 1)
+            {
+                // TODO: Handle multiple copies of the book in the library
+                Console.WriteLine("Multiple books of the same title found. Enter the Author.\n");
+                string author = Console.ReadLine() ?? "";
+                bookToReturn = results.Find(b => b.Author.Equals(author, StringComparison.OrdinalIgnoreCase))!;
+            }
+            else
+            {
+                bookToReturn = results[0];
+            }
+
+            if (bookToReturn == null)
+            {
+                Console.WriteLine("Book not found. Please try again.\n");
+            }
+            else if (!bookToReturn.IsBorrowed)
+            {
+                Console.WriteLine("Book is not borrowed. Please try again.\n");
+            }
+            else
+            {
+                bookToReturn.IsBorrowed = false;
+                Console.WriteLine("Book returned successfully.\n");
+            }
+        }
     }
 }
 
