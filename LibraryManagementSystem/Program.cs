@@ -154,12 +154,14 @@ class Library
         {
             // Get the book to borrow
             Book bookToBorrow;
-            if (results.Count == 1)
+            // Title and author match
+            if (results.Select(b => b.Author).Distinct().Count() == 1)
             {
-                bookToBorrow = results[0];
+                bookToBorrow = results.Find(b => !b.IsBorrowed)!;
             }
             else
             {
+                // Same title but different authors
                 Console.WriteLine("Multiple books of the same title found. Enter the Author: ");
                 string author = Console.ReadLine() ?? "";
                 // Find a matching book thats not borrowed
@@ -174,7 +176,8 @@ class Library
                 // Book not found or all borrowed
                 Console.WriteLine("Book not found or all copies are borrowed. Please try again.\n");
             }
-            else if (bookToBorrow.IsBorrowed) {
+            else if (bookToBorrow.IsBorrowed) 
+            {
                 Console.WriteLine("Book is already borrowed. Please try again later.\n");
             }
             else
